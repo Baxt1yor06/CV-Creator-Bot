@@ -16,7 +16,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-TOKEN = getenv("TOKEN")
+TOKEN = getenv("BOT_TOKEN")  # Railway dagi variable nomi
+print("TOKEN:", TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
