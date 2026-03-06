@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, F, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.context import FSMContext
@@ -25,6 +25,12 @@ dp = Dispatcher(storage=storage)
 start = ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[[
             KeyboardButton(text="Yangi CV/Rezyume yaratish"),
 ]])
+
+skip_kb = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="⏭ O‘tkazib yuborish", callback_data="skip_links")]
+    ]
+)
 
 
 
@@ -149,8 +155,15 @@ async def get_skills(message: Message, state: FSMContext):
     await state.update_data(
         skills=[s.strip() for s in message.text.split(",")]
     )
-    await message.answer("Portfolio/GitHub uchun link kiritng (ixtiyoriy):")
+    await message.answer("Portfolio/GitHub uchun link kiritng (ixtiyoriy):", reply_markup=skip_kb)
     await state.set_state(UserStates.user_links)
+
+@dp.message(F.data == "skip_links")
+async def skip_links(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(links="")
+    await callback.message.answer("Qaysi tillarni bilasiz:")
+    await state.set_state(UserStates.user_language)
+    await callback.answer()
 
 @dp.message(UserStates.user_links)
 async def get_links(message: Message, state: FSMContext):
