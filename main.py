@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, F, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton, Ca
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.context import FSMContext
@@ -158,7 +158,7 @@ async def get_skills(message: Message, state: FSMContext):
     await message.answer("Portfolio/GitHub uchun link kiritng (ixtiyoriy):", reply_markup=skip_kb)
     await state.set_state(UserStates.user_links)
 
-@dp.message(F.data == "skip_links")
+@dp.callback_query(F.data == "skip_links")
 async def skip_links(callback: types.CallbackQuery, state: FSMContext):
     await state.update_data(links="")
     await callback.message.answer("Qaysi tillarni bilasiz:")
