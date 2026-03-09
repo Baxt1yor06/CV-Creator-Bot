@@ -150,10 +150,16 @@ async def get_full_name(message: Message, state: FSMContext):
     await message.answer(_("Endi manzilingizni kiriting (shahar, tuman):"))
     await state.set_state(UserStates.user_location)
 
+# @dp.message(UserStates.user_location)
+# async def get_location(message: Message, state: FSMContext):
+#     text = message.text.strip()
+#     await state.update_data(location=text)
+#     await message.answer(_("Telefon raqamingizni yuboring:"))
+#     await state.set_state(UserStates.user_phone_number)
 @dp.message(UserStates.user_location)
 async def get_location(message: Message, state: FSMContext):
-    text = message.text.strip()
-    await state.update_data(location=text)
+    print(f"LOCATION HANDLER: '{message.text}'")
+    await state.update_data(location=message.text)
     await message.answer(_("Telefon raqamingizni yuboring:"))
     await state.set_state(UserStates.user_phone_number)
 
