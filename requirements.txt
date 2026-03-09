@@ -33,3 +33,4 @@ weasyprint==68.1
 webencodings==0.5.1
 yarl==1.22.0
 zopfli==0.4.1
+Babel==2.18.0

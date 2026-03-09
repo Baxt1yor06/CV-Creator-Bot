@@ -1,0 +1,149 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-09 11:03+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: main.py:33
+msgid "Yangi CV/Rezyume yaratish"
+msgstr ""
+
+#: main.py:38
+msgid "⏭ O‘tkazib yuborish"
+msgstr ""
+
+#: main.py:91
+msgid "Iltimos tilni tanlang: "
+msgstr ""
+
+#: main.py:105
+msgid "Til o'zgartirildi."
+msgstr ""
+
+#: main.py:111
+msgid "Ism va Familiyangizni kiritng:"
+msgstr ""
+
+#: main.py:117
+msgid "Endi manzilingizni kiriting (shahar, tuman):"
+msgstr ""
+
+#: main.py:124
+msgid "Telefon raqamingizni yuboring:"
+msgstr ""
+
+#: main.py:138
+msgid ""
+"❌ Telefon raqam noto‘g‘ri.\n"
+"Masalan: +998901234567"
+msgstr ""
+
+#: main.py:142
+msgid "Email yuboring:"
+msgstr ""
+
+#: main.py:155
+msgid ""
+"❌ Email noto‘g‘ri.\n"
+"Masalan: example@gmail.com"
+msgstr ""
+
+#: main.py:159
+msgid "Sohangizni kiriting:"
+msgstr ""
+
+#: main.py:167
+msgid "🎓 Ta’lim tarixini kiriting. Qayerda o‘qigansiz?"
+msgstr ""
+
+#: main.py:177
+msgid "Qaysi yillarda o‘qigansiz(2020-2022)?"
+msgstr ""
+
+#: main.py:191 main.py:286
+msgid ""
+"❌ Format noto‘g‘ri.\n"
+"Masalan: 2021 - 2024"
+msgstr ""
+
+#: main.py:198
+msgid "Qaysi yo‘nalishda o‘qigansiz?"
+msgstr ""
+
+#: main.py:213 main.py:315
+msgid "Ha"
+msgstr ""
+
+#: main.py:213 main.py:315
+msgid "Yo‘q"
+msgstr ""
+
+#: main.py:218
+msgid "Yana ta’lim qo‘shasizmi?"
+msgstr ""
+
+#: main.py:224
+msgid "Qayerda o‘qigansiz?"
+msgstr ""
+
+#: main.py:227
+msgid "Nimalarni bilasiz:"
+msgstr ""
+
+#: main.py:235
+msgid "Portfolio/GitHub uchun link kiritng (ixtiyoriy):"
+msgstr ""
+
+#: main.py:241 main.py:248
+msgid "Qaysi tillarni bilasiz:"
+msgstr ""
+
+#: main.py:256
+msgid "O'zingiz haqingizda ma'lumotlarni kiriting:"
+msgstr ""
+
+#: main.py:262
+msgid "Qayerda ishlaganingizni kiriting:"
+msgstr ""
+
+#: main.py:272
+msgid "Qaysi yillarda ishladingiz?"
+msgstr ""
+
+#: main.py:293
+msgid "Lavozimingiz?"
+msgstr ""
+
+#: main.py:301
+msgid "Batafsil nima ish qildingiz?"
+msgstr ""
+
+#: main.py:320
+msgid "Yana ish joyi qo‘shasizmi?"
+msgstr ""
+
+#: main.py:326
+msgid "Qayerda ishladingiz?"
+msgstr ""
+
+#: main.py:346
+msgid "Tayyorlanmoqda, iltimos kuting..."
+msgstr ""
+
+#: main.py:351
+msgid "Sizning professional CV-ingiz tayyor! ✨"
+msgstr ""
+
