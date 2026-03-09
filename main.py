@@ -152,7 +152,8 @@ async def get_full_name(message: Message, state: FSMContext):
 
 @dp.message(UserStates.user_location)
 async def get_location(message: Message, state: FSMContext):
-    await state.update_data(location=message.text)
+    text = message.text.strip()
+    await state.update_data(location=text)
     await message.answer(_("Telefon raqamingizni yuboring:"))
     await state.set_state(UserStates.user_phone_number)
 
