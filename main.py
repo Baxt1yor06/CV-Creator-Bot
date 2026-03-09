@@ -98,7 +98,8 @@ def check_year(text: str):
 # ===============================
 
 @dp.message(CommandStart())
-async def cmd_start(message: types.Message):
+async def cmd_start(message: types.Message, state: FSMContext):
+    await state.clear()
     await message.answer(_("Salom! Men CV(Rezyume) yasab beradigan botman.\nHello! I am a CV (Resume) creation bot.\nЗдравствуйте! Я — бот для создания резюме."),
         reply_markup=get_language_kb())
 
