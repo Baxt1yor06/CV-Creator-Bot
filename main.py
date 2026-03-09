@@ -44,8 +44,22 @@ dp.update.middleware(i18n_middleware)
 
 
 # ===============================
+# KONSTANTALAR
+# ===============================
+
+YES_ANSWERS = ["ha", "yes", "да"]
+CV_START_TEXTS = ["Yangi CV/Rezyume yaratish", "Create a new CV/Resume", "Создать новое резюме"]
+LANGUAGE_TEXTS = ["English", "Русский", "O'zbekcha"]
+
+
+# ===============================
 # KLAVIATURALAR
 # ===============================
+
+def get_language_kb() -> ReplyKeyboardMarkup:
+    keyboard = ReplyKeyboardBuilder()
+    keyboard.add(*[KeyboardButton(text=lang) for lang in LANGUAGE_TEXTS])
+    return keyboard.as_markup(resize_keyboard=True)
 
 def get_start_kb() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
@@ -64,10 +78,6 @@ skip_kb = InlineKeyboardMarkup(
         [InlineKeyboardButton(text="⏭ O'tkazib yuborish", callback_data="skip_links")]
     ]
 )
-
-YES_ANSWERS = ["ha", "yes", "да"]
-CV_START_TEXTS = ["Yangi CV/Rezyume yaratish", "Create a new CV/Resume", "Создать новое резюме"]
-LANGUAGE_TEXTS = ["English", "Русский", "O'zbekcha"]
 
 
 # ===============================
@@ -112,16 +122,17 @@ class UserStates(StatesGroup):
 
 
 # ===============================
-# BOSHLASH
+# BOSHLASH — til tanlash
 # ===============================
 
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message):
     await message.answer(
-        "Salom! Men CV(Rezyume) yasab beradigan botman.\n"
-        "Hello! I am a CV (Resume) creation bot.\n"
-        "Здравствуйте! Я — бот для создания резюме.",
-        reply_markup=get_start_kb()
+        "Salom! / Hello! / Привет!\n\n"
+        "Iltimos, tilni tanlang:\n"
+        "Please select a language:\n"
+        "Пожалуйста, выберите язык:",
+        reply_markup=get_language_kb()
     )
 
 
@@ -131,9 +142,7 @@ async def cmd_start(message: types.Message):
 
 @dp.message(Command("language"))
 async def cmd_language(message: types.Message):
-    keyboard = ReplyKeyboardBuilder()
-    keyboard.add(*[KeyboardButton(text=lang) for lang in LANGUAGE_TEXTS])
-    await message.answer(_("Iltimos tilni tanlang:"), reply_markup=keyboard.as_markup(resize_keyboard=True))
+    await message.answer(_("Iltimos tilni tanlang:"), reply_markup=get_language_kb())
 
 
 @dp.message(F.text.in_(LANGUAGE_TEXTS))
@@ -141,7 +150,10 @@ async def set_language(message: types.Message, state: FSMContext):
     locale_map = {"English": "en", "Русский": "ru", "O'zbekcha": "uz"}
     locale = locale_map[message.text]
     await i18n_middleware.set_locale(state, locale)
-    await message.answer(_("Til o'zgartirildi."), reply_markup=ReplyKeyboardRemove())
+    await message.answer(
+        _("Til o'zgartirildi. Endi CV yaratishni boshlashingiz mumkin!"),
+        reply_markup=get_start_kb()
+    )
 
 
 # ===============================
