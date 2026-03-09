@@ -35,11 +35,12 @@ def get_start_kb():
     ]])
 
 # skip_kb da _() ishlatilmaydi — oddiy matn
-skip_kb = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text=_("⏭ O'tkazib yuborish"), callback_data="skip_links")]
-    ]
-)
+def get_skip_kb():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=_("⏭ O'tkazib yuborish"), callback_data="skip_links")]
+        ]
+    )
 
 def get_language_kb():
     keyboard = ReplyKeyboardBuilder()
@@ -212,7 +213,7 @@ async def edu_again(message: Message, state: FSMContext):
 @dp.message(UserStates.user_skills)
 async def get_skills(message: Message, state: FSMContext):
     await state.update_data(skills=[s.strip() for s in message.text.split(",")])
-    await message.answer(_("Portfolio/GitHub uchun link kiritng (ixtiyoriy):"), reply_markup=skip_kb)
+    await message.answer(_("Portfolio/GitHub uchun link kiritng (ixtiyoriy):"), reply_markup=get_skip_kb())
     await state.set_state(UserStates.user_links)
 
 @dp.callback_query(F.data == "skip_links")
