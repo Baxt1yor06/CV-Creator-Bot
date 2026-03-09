@@ -28,13 +28,16 @@ i18n = I18n(path="locales", default_locale="uz", domain="messages")
 i18n_middleware = FSMI18nMiddleware(i18n)
 dp.update.middleware(i18n_middleware)
 
-# _() global darajada ishlatib bo'lmaydi — funksiyaga ko'chirildi
+
+# ===============================
+# KLAVIATURALAR
+# ===============================
+
 def get_start_kb():
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[[
         KeyboardButton(text=_("Yangi CV/Rezyume yaratish")),
     ]])
 
-# skip_kb da _() ishlatilmaydi — oddiy matn
 def get_skip_kb():
     return InlineKeyboardMarkup(
         inline_keyboard=[
@@ -55,7 +58,7 @@ def get_yes_no_kb():
 
 
 # ===============================
-# O'zgaruvchilar
+# O'ZGARUVCHILAR
 # ===============================
 
 class UserStates(StatesGroup):
@@ -80,32 +83,43 @@ class UserStates(StatesGroup):
     edu_field = State()
     edu_again = State()
 
+
 def check_phone(phone: str):
-    pattern = r"^\+998\d{9}$"
-    return re.match(pattern, phone)
+    return re.match(r"^\+998\d{9}$", phone)
 
 def check_email(email: str):
-    pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
-    return re.match(pattern, email)
+    return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 def check_year(text: str):
-    pattern = r"^\d{4}\s-\s\d{4}$"
-    return re.match(pattern, text)
+    return re.match(r"^\d{4}\s-\s\d{4}$", text)
 
 
 # ===============================
-# BOSHLASH — salomlashish va til tanlash
+# BOSHLASH
 # ===============================
 
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message, state: FSMContext):
+    data = await state.get_data()
+    locale = data.get("locale", "uz")
     await state.clear()
-    await message.answer(_("Salom! Men CV(Rezyume) yasab beradigan botman.\nHello! I am a CV (Resume) creation bot.\nЗдравствуйте! Я — бот для создания резюме."),
-        reply_markup=get_language_kb())
+    await state.update_data(locale=locale)       # locale ni saqlab qolish
+    await i18n_middleware.set_locale(state, locale)
+    await message.answer(
+        "Salom! Men CV(Rezyume) yasab beradigan botman.\n"
+        "Hello! I am a CV (Resume) creation bot.\n"
+        "Здравствуйте! Я — бот для создания резюме.",
+        reply_markup=get_language_kb()
+    )
 
 @dp.message(Command("language"))
 async def cmd_language(message: types.Message):
     await message.answer(_("Iltimos tilni tanlang: "), reply_markup=get_language_kb())
+
+
+# ===============================
+# TIL TANLASH
+# ===============================
 
 @dp.message(F.text.in_(["English", "Русский", "O'zbekcha"]))
 async def set_language(message: types.Message, state: FSMContext):
@@ -117,6 +131,7 @@ async def set_language(message: types.Message, state: FSMContext):
         locale = "uz"
 
     await i18n_middleware.set_locale(state, locale)
+    await state.update_data(locale=locale)       # locale ni state ga saqlash
     await message.answer(_("Til o'zgartirildi."), reply_markup=get_start_kb())
 
 
@@ -289,6 +304,7 @@ async def work_again(message: types.Message, state: FSMContext):
         await state.set_state(UserStates.work_name)
     else:
         data = await state.get_data()
+        locale = data.get("locale", "uz")        # locale ni saqlab ol
         await message.answer(_("Tayyorlanmoqda, iltimos kuting..."))
 
         html_content = render_cv(data)
@@ -300,10 +316,13 @@ async def work_again(message: types.Message, state: FSMContext):
 
         await message.answer_document(
             document=document,
-            caption=_(_("Sizning professional CV-ingiz tayyor! ✨")),
+            caption=_("Sizning professional CV-ingiz tayyor! ✨"),
             reply_markup=get_start_kb()
         )
+
         await state.clear()
+        await state.update_data(locale=locale)   # locale ni qayta saqlash
+        await i18n_middleware.set_locale(state, locale)
 
 
 # ===============================
