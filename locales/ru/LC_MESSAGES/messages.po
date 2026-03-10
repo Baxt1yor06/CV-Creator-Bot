@@ -23,7 +23,7 @@ msgid "Yangi CV/Rezyume yaratish"
 msgstr "Создать новое резюме"
 
 #: main.py:38
-msgid "⏭ O‘tkazib yuborish"
+msgid "⏭ O'tkazib yuborish"
 msgstr "⏭ Пропустить"
 
 #: main.py:91
@@ -48,7 +48,7 @@ msgstr "Отправьте свой номер телефона:"
 
 #: main.py:138
 msgid ""
-"❌ Telefon raqam noto‘g‘ri.\n"
+"❌ Telefon raqam noto'g'ri.\n"
 "Masalan: +998901234567"
 msgstr ""
 "❌ Неверный номер телефона.\n"
@@ -60,7 +60,7 @@ msgstr "Отправить вашу email:"
 
 #: main.py:155
 msgid ""
-"❌ Email noto‘g‘ri.\n"
+"❌ Email noto'g'ri.\n"
 "Masalan: example@gmail.com"
 msgstr ""
 "❌ Неверный адрес электронной почты.\n"
@@ -71,23 +71,23 @@ msgid "Sohangizni kiriting:"
 msgstr "Укажите свою профессию:"
 
 #: main.py:167
-msgid "🎓 Ta’lim tarixini kiriting. Qayerda o‘qigansiz?"
+msgid "🎓 Ta'lim tarixini kiriting. Qayerda o'qigansiz?"
 msgstr "🎓 Введите информацию о вашем образовании. Где вы учились?"
 
 #: main.py:177
-msgid "Qaysi yillarda o‘qigansiz(2020-2022)?"
+msgid "Qaysi yillarda o'qigansiz(2020-2022)?"
 msgstr "В какие годы вы учились (2020-2022)?"
 
 #: main.py:191 main.py:286
 msgid ""
-"❌ Format noto‘g‘ri.\n"
+"❌ Format noto'g'ri.\n"
 "Masalan: 2021 - 2024"
 msgstr ""
 "❌ Неверный формат.\n"
 "Например: 2021 - 2024"
 
 #: main.py:198
-msgid "Qaysi yo‘nalishda o‘qigansiz?"
+msgid "Qaysi yo'nalishda o'qigansiz?"
 msgstr "Какую специальность вы изучали?"
 
 #: main.py:213 main.py:315
@@ -95,15 +95,15 @@ msgid "Ha"
 msgstr "Да"
 
 #: main.py:213 main.py:315
-msgid "Yo‘q"
+msgid "Yo'q"
 msgstr "Нет"
 
 #: main.py:218
-msgid "Yana ta’lim qo‘shasizmi?"
+msgid "Yana ta'lim qo'shasizmi?"
 msgstr "Вы планируете расширить образовательную деятельность?"
 
 #: main.py:224
-msgid "Qayerda o‘qigansiz?"
+msgid "Qayerda o'qigansiz?"
 msgstr "Где вы учились?"
 
 #: main.py:227
@@ -139,7 +139,7 @@ msgid "Batafsil nima ish qildingiz?"
 msgstr "Что именно вы сделали?"
 
 #: main.py:320
-msgid "Yana ish joyi qo‘shasizmi?"
+msgid "Yana ish joyi qo'shasizmi?"
 msgstr "Вы добавите еще одну вакансию?"
 
 #: main.py:326

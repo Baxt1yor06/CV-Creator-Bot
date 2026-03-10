@@ -2,11 +2,12 @@ import asyncio
 import logging
 import sys
 import re
-from aiogram import Bot, Dispatcher, F, types
+from typing import Callable, Dict, Any, Awaitable
+from aiogram import Bot, Dispatcher, F, types, BaseMiddleware
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton, TelegramObject
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
@@ -27,6 +28,27 @@ dp = Dispatcher(storage=storage)
 i18n = I18n(path="locales", default_locale="uz", domain="messages")
 i18n_middleware = FSMI18nMiddleware(i18n)
 dp.update.middleware(i18n_middleware)
+
+
+# ===============================
+# LOCALE RESTORE MIDDLEWARE
+# ===============================
+
+class LocaleRestoreMiddleware(BaseMiddleware):
+    async def __call__(
+        self,
+        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: Dict[str, Any],
+    ) -> Any:
+        state: FSMContext = data.get("state")
+        if state:
+            state_data = await state.get_data()
+            locale = state_data.get("locale", "uz")
+            await i18n_middleware.set_locale(state, locale)
+        return await handler(event, data)
+
+dp.update.middleware(LocaleRestoreMiddleware())
 
 
 # ===============================
@@ -103,7 +125,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     data = await state.get_data()
     locale = data.get("locale", "uz")
     await state.clear()
-    await state.update_data(locale=locale)       # locale ni saqlab qolish
+    await state.update_data(locale=locale)
     await i18n_middleware.set_locale(state, locale)
     await message.answer(
         "Salom! Men CV(Rezyume) yasab beradigan botman.\n"
@@ -131,7 +153,7 @@ async def set_language(message: types.Message, state: FSMContext):
         locale = "uz"
 
     await i18n_middleware.set_locale(state, locale)
-    await state.update_data(locale=locale)       # locale ni state ga saqlash
+    await state.update_data(locale=locale)
     await message.answer(_("Til o'zgartirildi."), reply_markup=get_start_kb())
 
 
@@ -150,15 +172,8 @@ async def get_full_name(message: Message, state: FSMContext):
     await message.answer(_("Endi manzilingizni kiriting (shahar, tuman):"))
     await state.set_state(UserStates.user_location)
 
-# @dp.message(UserStates.user_location)
-# async def get_location(message: Message, state: FSMContext):
-#     text = message.text.strip()
-#     await state.update_data(location=text)
-#     await message.answer(_("Telefon raqamingizni yuboring:"))
-#     await state.set_state(UserStates.user_phone_number)
 @dp.message(UserStates.user_location)
 async def get_location(message: Message, state: FSMContext):
-    print(f"LOCATION HANDLER: '{message.text}'")
     await state.update_data(location=message.text)
     await message.answer(_("Telefon raqamingizni yuboring:"))
     await state.set_state(UserStates.user_phone_number)
@@ -311,7 +326,7 @@ async def work_again(message: types.Message, state: FSMContext):
         await state.set_state(UserStates.work_name)
     else:
         data = await state.get_data()
-        locale = data.get("locale", "uz")        # locale ni saqlab ol
+        locale = data.get("locale", "uz")
         await message.answer(_("Tayyorlanmoqda, iltimos kuting..."))
 
         html_content = render_cv(data)
@@ -328,7 +343,7 @@ async def work_again(message: types.Message, state: FSMContext):
         )
 
         await state.clear()
-        await state.update_data(locale=locale)   # locale ni qayta saqlash
+        await state.update_data(locale=locale)
         await i18n_middleware.set_locale(state, locale)
 
 
