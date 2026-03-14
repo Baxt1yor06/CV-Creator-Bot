@@ -5,8 +5,8 @@ from free_template import render_cv
 from weasyprint import HTML
 from aiogram.utils.i18n import gettext as _
 from keyboard import *
-from main import  UserStates, check_phone, check_email, check_year
-from main import i18n_middleware
+from utilits import  UserStates, check_phone, check_email, check_year, i18n_middleware
+
 
 
 router = Router()
