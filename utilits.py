@@ -65,4 +65,4 @@ class LocaleRestoreMiddleware(BaseMiddleware):
             await i18n_middleware.set_locale(state, locale)
         return await handler(event, data)
 
-router.update.middleware(LocaleRestoreMiddleware())
+router.message.middleware(LocaleRestoreMiddleware())
