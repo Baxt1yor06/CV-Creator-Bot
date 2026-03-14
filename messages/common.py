@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from main import i18n_middleware
+from loader import i18n_middleware
 from keyboard import *
 from aiogram.utils.i18n import gettext as _
 

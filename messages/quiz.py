@@ -6,7 +6,7 @@ from weasyprint import HTML
 from aiogram.utils.i18n import gettext as _
 from keyboard import *
 from utilits import  UserStates, check_phone, check_email, check_year
-from main import i18n_middleware
+from loader import i18n_middleware
 
 
 
